@@ -16,6 +16,10 @@ Launch it. Move the mouse. That's it.
 
 `-s | --scale` sets the zoom factor
 
+`-g | --draw-grid` draws a pixel grid
+
+`--grid-colour "<r> <g> <b> <a>"` sets the colour of the pixel grid
+
 # Building
 
 ## Arch

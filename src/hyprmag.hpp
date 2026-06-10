@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mutex>
+#include <vector>
 #include "defines.hpp"
 #include "helpers/LayerSurface.hpp"
 #include "helpers/PoolBuffer.hpp"
@@ -27,6 +28,8 @@ class CHyprmag {
     bool                                        m_bRenderInactive = false;
     int                                         m_iRadius         = 200;
     float                                       m_fScale          = 4.0f;
+    bool                                        m_bDrawPixelGrid = false;
+    std::vector<double>                         m_vGridColour = {0.8, 0.1, 0.1, 0.6};
 
     bool                                        m_bRunning = true;
 

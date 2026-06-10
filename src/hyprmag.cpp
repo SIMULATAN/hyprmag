@@ -396,6 +396,34 @@ void CHyprmag::renderSurface(CLayerSurface* pSurface, bool forceInactive) {
 
         cairo_surface_flush(PBUFFER->surface);
 
+        if (g_pHyprmag->m_bDrawPixelGrid) {
+            cairo_set_source_rgba(PCAIRO, m_vGridColour[0], m_vGridColour[1], m_vGridColour[2], m_vGridColour[3]); // Grid line color
+            cairo_set_line_width(PCAIRO, 1.0);
+
+            const float zoom = g_pHyprmag->m_fScale;
+            const float scaledRadius = radius / SCALEBUFS.x;
+            const auto  center = Vector2D{m_vLastCoords.x * pSurface->m_pMonitor->scale, m_vLastCoords.y * pSurface->m_pMonitor->scale};
+
+            const auto sourceTopLeft = CLICKPOS - Vector2D{scaledRadius, scaledRadius} / zoom;
+
+            const double gridOffsetX = -fmod(sourceTopLeft.x, 1.0) * zoom + (zoom/2);
+            const double gridOffsetY = -fmod(sourceTopLeft.y, 1.0) * zoom + (zoom/2);
+
+            for (int i = 0; i <= (scaledRadius * 2) / zoom + 1; ++i) {
+                double x = (center.x - scaledRadius) + gridOffsetX + i * zoom;
+                cairo_move_to(PCAIRO, x, center.y - scaledRadius);
+                cairo_line_to(PCAIRO, x, center.y + scaledRadius);
+            }
+
+            for (int i = 0; i <= (scaledRadius * 2) / zoom + 1; ++i) {
+                double y = (center.y - scaledRadius) + gridOffsetY + i * zoom;
+                cairo_move_to(PCAIRO, center.x - scaledRadius, y);
+                cairo_line_to(PCAIRO, center.x + scaledRadius, y);
+            }
+
+            cairo_stroke(PCAIRO);
+        }
+
         cairo_restore(PCAIRO);
 
         cairo_pattern_destroy(PATTERN);
