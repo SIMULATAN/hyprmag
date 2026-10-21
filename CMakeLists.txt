@@ -3,6 +3,8 @@ project(hyprmag
     DESCRIPTION "A blazing fast wayland wallpaper utility"
 )
 
+include(GNUInstallDirs)
+
 set(CMAKE_MESSAGE_LOG_LEVEL "STATUS")
 
 message(STATUS "Configuring hyprmag!")
